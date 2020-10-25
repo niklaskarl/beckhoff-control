@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TwinCAT.Ads;
 
 namespace ControlServer
 {
@@ -51,6 +50,9 @@ namespace ControlServer
                 builder.AllowAnyMethod();
                 builder.AllowAnyHeader();
             });
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
