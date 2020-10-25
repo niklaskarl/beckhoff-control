@@ -38,24 +38,21 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { Component, Vue } from 'vue-property-decorator';
 
-export default Vue.extend({
-  name: 'App',
+@Component({
+    components: {
+      
+    }
+})
+export default class App extends Vue {
+  
+}
 
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
-});
 </script>

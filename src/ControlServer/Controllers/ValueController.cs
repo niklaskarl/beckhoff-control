@@ -13,6 +13,11 @@ using System.IO;
 
 namespace ControlServer.Controllers
 {
+    public class ValueModel
+    {
+        public bool Value { get; set; }
+    }
+
     [ApiController]
     [Route("api/groups/{group}/offsets/{offset}")]
     public class ValueController : ControllerBase
@@ -94,7 +99,7 @@ namespace ControlServer.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(CancellationToken cancel, string group, string offset, [FromBody]bool value)
+        public async Task<ActionResult> Put(CancellationToken cancel, string group, string offset, [FromBody]ValueModel value)
         {
                   XmlDocument document = new XmlDocument();
 
@@ -119,7 +124,7 @@ namespace ControlServer.Controllers
             indexOffset.AppendChild(document.CreateTextNode(offset));
 
             XmlElement pData = document.CreateElement("pData");
-            pData.AppendChild(document.CreateTextNode(Convert.ToBase64String(new byte[] { Convert.ToByte(value) })));
+            pData.AppendChild(document.CreateTextNode(Convert.ToBase64String(new byte[] { Convert.ToByte(value.Value) })));
 
             document.AppendChild(envelope);
             envelope.AppendChild(body);

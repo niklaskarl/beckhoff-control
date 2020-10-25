@@ -10,5 +10,8 @@ export class ValuesService {
         return response.data;
     }
 
-}
+    public static async put(group: number, offset: number, value: boolean): Promise<void> {
+        const response = await axios.put(`${BASE_URL}api/groups/${group}/offsets/${offset}`, { value: value });
+    }
 
+}
