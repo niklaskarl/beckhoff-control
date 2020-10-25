@@ -25,7 +25,7 @@ namespace ControlServer.Controllers
         }
 
         [HttpGet]
-        public async Task<int> Get(CancellationToken cancel, string group, string offset)
+        public async Task<bool> Get(CancellationToken cancel, string group, string offset)
         {
             XmlDocument document = new XmlDocument();
 
@@ -90,7 +90,7 @@ namespace ControlServer.Controllers
                 .Value;
 
             byte[] buffer = System.Convert.FromBase64String(value);
-            return buffer[0];
+            return buffer[0] != 0;
         }
 
         [HttpPut]
