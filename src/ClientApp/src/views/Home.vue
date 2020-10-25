@@ -24,26 +24,82 @@ export default class Home extends Vue {
 
     public switches = [
         {
-            name: 'Esszimmer OG',
+            name: 'Bad',
+            putGroup: 0x4021,
+            putOffset: 0x00,
+            getGroup: 0x4021,
+            getOffset: 0xA0
+        },
+        {
+            name: 'Schlafzimmer',
+            putGroup: 0x4021,
+            putOffset: 0x01,
+            getGroup: 0x4021,
+            getOffset: 0xA1
+        },
+        {
+            name: 'Wintergarten',
+            putGroup: 0x4021,
+            putOffset: 0x02,
+            getGroup: 0x4021,
+            getOffset: 0xA2
+        },
+        {
+            name: 'Waschküche',
+            putGroup: 0x4021,
+            putOffset: 0x03,
+            getGroup: 0x4021,
+            getOffset: 0xA3
+        },
+        {
+            name: 'Aussenbereich',
+            putGroup: 0x4021,
+            putOffset: 0x04,
+            getGroup: 0x4021,
+            getOffset: 0xA4
+        },
+        {
+            name: 'Gäste WC',
+            putGroup: 0x4021,
+            putOffset: 0x08,
+            getGroup: 0x4021,
+            getOffset: 0xA8
+        },
+        {
+            name: 'Wohnbereich',
+            putGroup: 0x4021,
+            putOffset: 0x09,
+            getGroup: 0x4021,
+            getOffset: 0xA9
+            },
+            {
+            name: 'Essbereich',
             putGroup: 0x4021,
             putOffset: 0x0A,
             getGroup: 0x4021,
             getOffset: 0xAA
         },
         {
-            name: 'Esszimmer UG',
+            name: 'Küche',
             putGroup: 0x4021,
-            putOffset: 0x0A,
+            putOffset: 0x0B,
             getGroup: 0x4021,
-            getOffset: 0xAA
+            getOffset: 0xAB
         },
         {
-            name: '...',
+            name: 'Flur',
             putGroup: 0x4021,
-            putOffset: 0x0A,
-            getGroup: 0xF031,
-            getOffset: 0x0A
-        }
+            putOffset: 0x0C,
+            getGroup: 0x4021,
+            getOffset: 0xAC
+        },
+        {
+            name: 'Abstellraum',
+            putGroup: 0x4021,
+            putOffset: 0x0D,
+            getGroup: 0x4021,
+            getOffset: 0xAD
+        },
     ];
 
     state: { [name: string]: boolean | null } = {};
