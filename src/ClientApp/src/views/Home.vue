@@ -1,134 +1,118 @@
 <template>
+    <v-app>
+        <v-app-bar app color="primary" dark>
+            <v-icon>mdi-power</v-icon>
+            <v-toolbar-title class="ml-3">Steuerung</v-toolbar-title>
 
-  <div class="home">
-    
-    <div v-for="ctrl of switches" :key="ctrl.name">
-        <v-btn @click="toggle(ctrl.putGroup, ctrl.putOffset)">{{ ctrl.name }}: {{ state[ctrl.name] }}</v-btn>
-    </div>
+            <v-spacer />
 
-    <v-btn @click="refresh">REFRESH</v-btn>
-  </div>
+            <v-btn icon @click="$refs['home'].refresh()">
+                <v-icon>mdi-refresh</v-icon>
+            </v-btn>
+        </v-app-bar>
+
+        <v-main>
+            <v-expansion-panels multiple tile :value="[ 0, 1 ]">
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Lichter</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <v-container fluid>
+                            <v-row v-if="!items" justify="center" class="mt-4">
+                                <v-progress-circular indeterminate></v-progress-circular>
+                            </v-row>
+                            <v-row>
+                                <v-col v-for="item of items" :key="item.light.id" lg="3" md="4" sm="6" cols="12" class="flex-grow-0 flex-shrink-0">
+                                    <v-card tile>
+                                        <v-card-title>
+                                            {{ item.light.name }}
+                                        </v-card-title>
+
+                                        <v-card-text>
+                                            <v-icon x-large>mdi-lightbulb</v-icon>
+                                            <span style="font-weight: bold;" :style="{ color: (item.power && item.power.value) ? 'green' : 'red' }">{{ (item.power && item.power.value) ? 'AN' : 'AUS' }}</span>
+                                        </v-card-text>
+
+                                        <v-card-actions>
+                                            <v-btn style="width: 100%" tile @click="toggle(item)">{{ (item.power && item.power.value) ? 'AUSSCHALTEN' : 'EINSCHALTEN' }}</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Rollläden</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        ...
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-main>
+
+        <v-footer app absolute>
+            <v-spacer />
+            <router-link class="footer-link" to="/about">Impressum</router-link>
+        </v-footer>
+    </v-app>
 </template>
 
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
-import { ValuesService } from '../services/values-service';
+import { LightModel, LightPowerModel } from '../models/light.model';
+import * as LightService from '../services/light.service';
 
-
+interface Item {
+    light: LightModel;
+    power: LightPowerModel | null;
+}
 
 @Component({
 
 })
 export default class Home extends Vue {
 
-    public switches = [
-        {
-            name: 'Bad',
-            putGroup: 0x4021,
-            putOffset: 0x00,
-            getGroup: 0x4021,
-            getOffset: 0xA0
-        },
-        {
-            name: 'Schlafzimmer',
-            putGroup: 0x4021,
-            putOffset: 0x01,
-            getGroup: 0x4021,
-            getOffset: 0xA1
-        },
-        {
-            name: 'Wintergarten',
-            putGroup: 0x4021,
-            putOffset: 0x02,
-            getGroup: 0x4021,
-            getOffset: 0xA2
-        },
-        {
-            name: 'Waschküche',
-            putGroup: 0x4021,
-            putOffset: 0x03,
-            getGroup: 0x4021,
-            getOffset: 0xA3
-        },
-        {
-            name: 'Aussenbereich',
-            putGroup: 0x4021,
-            putOffset: 0x04,
-            getGroup: 0x4021,
-            getOffset: 0xA4
-        },
-        {
-            name: 'Gäste WC',
-            putGroup: 0x4021,
-            putOffset: 0x08,
-            getGroup: 0x4021,
-            getOffset: 0xA8
-        },
-        {
-            name: 'Wohnbereich',
-            putGroup: 0x4021,
-            putOffset: 0x09,
-            getGroup: 0x4021,
-            getOffset: 0xA9
-            },
-            {
-            name: 'Essbereich',
-            putGroup: 0x4021,
-            putOffset: 0x0A,
-            getGroup: 0x4021,
-            getOffset: 0xAA
-        },
-        {
-            name: 'Küche',
-            putGroup: 0x4021,
-            putOffset: 0x0B,
-            getGroup: 0x4021,
-            getOffset: 0xAB
-        },
-        {
-            name: 'Flur',
-            putGroup: 0x4021,
-            putOffset: 0x0C,
-            getGroup: 0x4021,
-            getOffset: 0xAC
-        },
-        {
-            name: 'Abstellraum',
-            putGroup: 0x4021,
-            putOffset: 0x0D,
-            getGroup: 0x4021,
-            getOffset: 0xAD
-        },
-    ];
+    private interval: number | null = null;
 
-    state: { [name: string]: boolean | null } = {};
+    private items: Item[] | null = null;
 
     constructor() {
         super();
-
-        this.state = {
-            'Esszimmer OG': null,
-            'Esszimmer UG': null,
-            '...': null,
-        };
     }
 
-    mounted() {
-        this.refresh();
+    async mounted() {
+
+        this.items = (await LightService.getLights()).map<Item>(l => ({ light: l, power: null }));
+        await this.refresh();
+
+        this.interval = setInterval(() => {
+            this.refresh();
+        }, 1000);
     }
 
-    async refresh() {
-        for (const ctrl of this.switches) {
-            const value = await ValuesService.get(ctrl.getGroup, ctrl.getOffset);
-            this.state[ctrl.name] = value;
+    unmounted() {
+        if (this.interval != null) {
+            clearInterval(this.interval);
+            this.interval = null;
         }
     }
 
-    async toggle(group: number, offset: number) {
-        await ValuesService.put(group, offset, true);
-        await ValuesService.put(group, offset, false);
+    async refresh() {
+        if (this.items) {
+            for (const item of this.items) {
+                item.power = await LightService.getPower(item.light.id);
+            }
+        }
+    }
+
+    async toggle(item: Item) {
+        item.power = await LightService.putPower(item.light.id, !(item.power?.value ?? false))
     }
 }
 
 </script>
+
+<style lang="scss" scoped>
+
+</style>

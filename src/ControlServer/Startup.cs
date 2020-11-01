@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using ControlServer.Services.Ads;
+
 namespace ControlServer
 {
     public class Startup
@@ -26,7 +28,7 @@ namespace ControlServer
         {
             services.AddLogging();
 
-            // services.AddAdsClient(new AmsAddress("192.168.168.11.1.1", 801));
+            services.AddAds(new Uri("http://192.168.168.11/TcAdsWebService/TcAdsWebService.dll"), "192.168.168.11.1.1", 801);
 
             services.AddControllers();
         }
@@ -37,8 +39,6 @@ namespace ControlServer
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
