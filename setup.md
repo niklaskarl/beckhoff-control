@@ -47,7 +47,7 @@ Restart=always
 User=beckhoff
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ```
 
 ### nginx

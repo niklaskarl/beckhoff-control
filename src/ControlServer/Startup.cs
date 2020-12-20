@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 using ControlServer.Services.Ads;
+using ControlServer.Services.Data;
 
 namespace ControlServer
 {
@@ -28,6 +23,7 @@ namespace ControlServer
         {
             services.AddLogging();
 
+            services.AddData(Configuration.GetValue<string>("ConfigPath"));
             services.AddAds(new Uri("http://192.168.168.11/TcAdsWebService/TcAdsWebService.dll"), "192.168.168.11.1.1", 801);
 
             services.AddControllers();

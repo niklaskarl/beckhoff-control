@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using ControlServer.Data;
 using ControlServer.Models;
 using ControlServer.Services.Ads;
+using ControlServer.Services.Data;
 
 namespace ControlServer.Controllers
 {
@@ -17,26 +18,29 @@ namespace ControlServer.Controllers
     {
         private readonly ILogger<LightController> logger;
 
+        private readonly IDataService dataService;
+
         private readonly IAdsService adsService;
 
-        public LightController(ILogger<LightController> logger, IAdsService adsService)
+        public LightController(ILogger<LightController> logger, IDataService dataService, IAdsService adsService)
         {
             this.logger = logger;
+            this.dataService = dataService;
             this.adsService = adsService;
         }
 
         [HttpGet]
         public List<LightModel> GetLights()
         {
-            return DataContext.Lights.Select((l, i) => new LightModel() { Id = i, Name = l.Name }).ToList();
+            return this.dataService.Lights.Select((l, i) => new LightModel() { Id = i, Name = l.Name, Icon = l.Icon }).ToList();
         }
 
         [HttpGet("{id}/power")]
         public async Task<ActionResult<LightPowerModel>> GetPowerAsync(int id)
         {
-            if (id >= 0 && id < DataContext.Lights.Length)
+            if (id >= 0 && id < dataService.Lights.Length)
             {
-                Light light = DataContext.Lights[id];
+                Light light = dataService.Lights[id];
                 bool result = await this.adsService.ReadBoolAsync(light.ReadGroup, light.ReadOffset);
                 return new LightPowerModel()
                 {
@@ -52,9 +56,9 @@ namespace ControlServer.Controllers
         [HttpPut("{id}/power")]
         public async Task<ActionResult<LightPowerModel>> PutPowerAsync(int id, LightPowerModel value)
         {
-            if (id >= 0 && id < DataContext.Lights.Length)
+            if (id >= 0 && id < dataService.Lights.Length)
             {
-                Light light = DataContext.Lights[id];
+                Light light = dataService.Lights[id];
                 bool result = await this.adsService.ReadBoolAsync(light.ReadGroup, light.ReadOffset);
                 if (value.Value != result)
                 {

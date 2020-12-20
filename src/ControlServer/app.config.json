@@ -1,0 +1,108 @@
+{
+    "lights": [
+        {
+            "Name": "Gesamt",
+            "Icon": "mdi-home",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 65,
+            "ReadGroup": 16417,
+            "ReadOffset": 176
+        },
+        {
+            "Name": "Wohnbereich",
+            "Icon": "mdi-sofa",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 9,
+            "ReadGroup": 16417,
+            "ReadOffset": 169
+        },
+        {
+            "Name": "Essbereich",
+            "Icon": "mdi-silverware-fork-knife",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 10,
+            "ReadGroup": 16417,
+            "ReadOffset": 170
+        },
+        {
+            "Name": "Küche",
+            "Icon": "mdi-fridge",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 11,
+            "ReadGroup": 16417,
+            "ReadOffset": 171
+        },
+
+        {
+            "Name": "Aussenbereich",
+            "Icon": "mdi-coach-lamp",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 4,
+            "ReadGroup": 16417,
+            "ReadOffset": 164
+        },
+        {
+            "Name": "Schlafzimmer",
+            "Icon": "mdi-bed-empty",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 1,
+            "ReadGroup": 16417,
+            "ReadOffset": 161
+        },
+        {
+            "Name": "Bad",
+            "Icon": "mdi-shower-head",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 0,
+            "ReadGroup": 16417,
+            "ReadOffset": 160
+        },
+        {
+            "Name": "Gäste WC",
+            "Icon": "mdi-toilet",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 8,
+            "ReadGroup": 16417,
+            "ReadOffset": 168
+        },
+        {
+            "Name": "Wintergarten",
+            "Icon": "mdi-snowflake",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 2,
+            "ReadGroup": 16417,
+            "ReadOffset": 162
+        },
+        {
+            "Name": "Flur",
+            "Icon": "mdi-stairs",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 12,
+            "ReadGroup": 16417,
+            "ReadOffset": 172
+        },
+        {
+            "Name": "Waschküche",
+            "Icon": "mdi-washing-machine",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 3,
+            "ReadGroup": 16417,
+            "ReadOffset": 163
+        },
+        {
+            "Name": "Abstellraum",
+            "Icon": "mdi-archive",
+            "TriggerGroup": 16417,
+            "TriggerOffset": 13,
+            "ReadGroup": 16417,
+            "ReadOffset": 173
+        }
+    ],
+    "shutter": [
+
+
+
+
+        
+    ]
+}

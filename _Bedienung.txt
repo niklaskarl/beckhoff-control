@@ -1,0 +1,38 @@
+Starten integrateted Terminal (Rechts Klick) auf ClientApp
+
+in Console eingeben
+"npm run serve"
+Enter
+Terminal kommt meldung zum schließen. Danach https://localhost:5001
+
+Dreieck mit Käfer klicken
+auf Play bei .NET CORE
+
+Bei Terminal über http://localhost:8000 starten
+
+
+_--------------------------------------------------------------------------_
+https://vuetifyjs.com/en/getting-started/installation/
+UI Components
+Bib für Frontend
+
+https://materialdesignicons.com/
+https://material.io/resources/icons
+
+floor-plan
+baguette
+bell
+coach-lamp
+duck
+flash
+pot-mix
+pot-steam
+table-chair
+
+_--------------------------------------------------------------------------_
+Programm übertragen auf Pi:
+Entweder deploy.ps1 mit Rechtsklick in PowerShell ausführen
+Oder im VisualStudio im Terminal bei PowerShell .\deploy.ps1 ausführen
+		=> Muss auf den Ordner beckhoff-controll eingestellt sein
+
+Abbrechen ist bis kurz vor Übertragung mit STRG + C möglich
